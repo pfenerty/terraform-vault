@@ -1,0 +1,43 @@
+injector:
+  enabled: ${injector_enable}
+server:
+  enabled: ${server_enable}
+  extraSecretEnvironmentVars:
+    - envName: AWS_ACCESS_KEY_ID
+      secretName: ${dynamodb_creds_secret_name}
+      secretKey: "access_key"
+    - envName: AWS_SECRET_ACCESS_KEY
+      secretName: ${dynamodb_creds_secret_name}
+      secretKey: "secret_key"
+  readinessProbe:
+    timeoutSeconds: 10
+  livenessProbe:
+    timeoutSeconds: 10
+  ha:
+    enabled: true
+    replicas: ${server_replicas}
+    raft:
+      enabled: false
+    config: |
+      ui = ${ui_enable}
+      
+      listener "tcp" {
+        tls_disable     = "true"
+        address         = "[::]:8200"
+        cluster_address = "[::]:8201"
+      }
+      
+      storage "dynamodb" {
+        ha_enabled = "true"
+        region  = "${dynamodb_aws_region}"
+        table   = "${dynamodb_table_name}"
+      }
+      
+      service_registration "kubernetes" {}
+
+      %{ if auto_unseal }
+      seal "awskms" {
+        region      = "${unseal_kms_region}"
+        kms_key_id  = "${unseal_kms_key_id}"
+      }
+      %{ endif ~}
