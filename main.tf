@@ -35,6 +35,14 @@ resource "aws_dynamodb_table" "table" {
     type = "S"
   }
 
+  point_in_time_recovery {
+    enabled = true
+  }
+
+  server_side_encryption {
+    enabled = true
+  }
+
   tags = var.common_tags
 }
 
@@ -95,6 +103,7 @@ resource "aws_kms_key" "key" {
   count                   = var.vault_auto_unseal ? 1 : 0
   description             = "Vault unseal key"
   deletion_window_in_days = 10
+  enable_key_rotation     = true
 
   tags = var.common_tags
 }
