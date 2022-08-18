@@ -16,7 +16,7 @@ variable "common_tags" {
 }
 
 variable "kube_context" {
-  type = string
+  type        = string
   description = "Name of the kubernetes configuration to use"
 }
 

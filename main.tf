@@ -92,7 +92,7 @@ resource "aws_iam_user_policy" "kms" {
 }
 
 resource "aws_kms_key" "key" {
-  count = var.vault_auto_unseal ? 1 : 0
+  count                   = var.vault_auto_unseal ? 1 : 0
   description             = "Vault unseal key"
   deletion_window_in_days = 10
 

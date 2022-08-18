@@ -1,6 +1,6 @@
-aws_region  = "us-west-2"
+aws_region   = "us-west-2"
 kube_context = "pi-cluster"
-name_prefix = "homelab_"
+name_prefix  = "homelab_"
 common_tags = {
   "project" = "homelab"
 }
