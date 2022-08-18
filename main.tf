@@ -8,13 +8,13 @@ provider "aws" {
 
 provider "kubernetes" {
   config_path    = "~/.kube/config"
-  config_context = "pi-cluster"
+  config_context = var.kube_context
 }
 
 provider "helm" {
   kubernetes {
     config_path    = "~/.kube/config"
-    config_context = "pi-cluster"
+    config_context = var.kube_context
   }
 }
 

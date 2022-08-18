@@ -15,6 +15,11 @@ variable "common_tags" {
   default     = {}
 }
 
+variable "kube_context" {
+  type = string
+  description = "Name of the kubernetes configuration to use"
+}
+
 variable "vault_replicas" {
   type        = number
   description = "Number of Vault replicas"
